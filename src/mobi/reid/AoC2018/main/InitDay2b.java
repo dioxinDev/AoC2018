@@ -24,10 +24,6 @@ public class InitDay2b {
             for (int i = ++compareCount; i < split.length; i++) {
                 diffCount = 0;
                 compare2 = split[i];
-                System.out.println("COMPARING");
-                System.out.println(compare1);
-                System.out.println(compare2);
-                System.out.println();
                 for (int x = 0; x < compare1.length(); x++) {
                     if (compare1.charAt(x) != compare2.charAt(x)) {
                         diffCount++;
@@ -35,8 +31,6 @@ public class InitDay2b {
                     }
                 }count++;
                 if (diffCount == 1) {
-                    System.out.println(compare1);
-                    System.out.println(compare2);
                     for (int x = 0; x < compare1.length(); x++) {
                         if (compare1.charAt(x) == compare2.charAt(x)) {
                             result += Character.toString(compare1.charAt(x));
@@ -44,18 +38,13 @@ public class InitDay2b {
                     }
                     break;
                 }
-                System.out.println("diffcount"+diffCount);
-                System.out.println("comparecount"+compareCount);
-                System.out.println("count"+count);
 
 
 
             }
             if (diffCount == 1) break;
         }
-        System.out.println(compare1);
         System.out.println("Result:"+result);
-        System.out.println(compareCount);
 
 
 
