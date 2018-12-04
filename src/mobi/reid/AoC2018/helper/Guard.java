@@ -56,4 +56,7 @@ public class Guard {
             }
         return mostAsleepMinute;
     }
+public int timesMostFrequent(){
+return sleepTracker[freqMinute()];
+}
 }

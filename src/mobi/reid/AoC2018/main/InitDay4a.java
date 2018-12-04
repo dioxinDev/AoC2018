@@ -11,7 +11,7 @@ public class InitDay4a {
     public static void main(String[] args) {
         String input = Helper.getStringfromFile("./resources/day4ainput.txt");
         StringTokenizer tokens = new StringTokenizer(input, "\n");
-        ArrayList<String> rosterLog = new ArrayList();
+        ArrayList<String> rosterLog = new ArrayList<>();
         while(tokens.hasMoreTokens()){
         rosterLog.add(tokens.nextToken());
         }
@@ -36,17 +36,27 @@ public class InitDay4a {
 
         System.out.println(currGuard.name + ":" +currGuard.log);
         Guard longestSleeper = new Guard("null");
+        Guard frequentSleeper = longestSleeper;
+        int mostFreqMinuteCount = 0;
         for (Guard guard: guards.values()) {
             guard.parseLog();
             System.out.println("AsleepTime" + guard.asleepDuration);
             if(guard.asleepDuration > longestSleeper.asleepDuration){
                 longestSleeper = guard;
             }
+            if(guard.timesMostFrequent()>mostFreqMinuteCount){
+             frequentSleeper = guard;
+             mostFreqMinuteCount = frequentSleeper.timesMostFrequent();
+}
 
         }
         System.out.println("longestSleepTime" + longestSleeper.asleepDuration);
         int digest = (Integer.parseInt(longestSleeper.name.substring(1))*longestSleeper.freqMinute());
         System.out.println("LongestSleeper:" + longestSleeper.name + ":" + digest);
+        digest = frequentSleeper.timesMostFrequent() * frequentSleeper.freqMinute();
+       System.out.println("frequentSleeper:" + longestSleeper.name + ":" + digest);
+
+
     }
 
 }
