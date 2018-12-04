@@ -36,17 +36,25 @@ public class InitDay4a {
 
         System.out.println(currGuard.name + ":" +currGuard.log);
         Guard longestSleeper = new Guard("null");
+        Guard freqMinuteSleeper = longestSleeper;
+        int freqMinuteCount = 0;
         for (Guard guard: guards.values()) {
             guard.parseLog();
             System.out.println("AsleepTime" + guard.asleepDuration);
             if(guard.asleepDuration > longestSleeper.asleepDuration){
                 longestSleeper = guard;
             }
+            if(guard.sleepTracker[guard.freqMinute()]>freqMinuteCount){
+                freqMinuteSleeper = guard;
+                freqMinuteCount = guard.sleepTracker[guard.freqMinute()];
+            }
 
         }
         System.out.println("longestSleepTime" + longestSleeper.asleepDuration);
         int digest = (Integer.parseInt(longestSleeper.name.substring(1))*longestSleeper.freqMinute());
         System.out.println("LongestSleeper:" + longestSleeper.name + ":" + digest);
+        digest = (Integer.parseInt(freqMinuteSleeper.name.substring(1))*freqMinuteSleeper.freqMinute());
+        System.out.println("FreqMinuteSleeper:" + freqMinuteSleeper.name + ":" + digest);
     }
 
 }

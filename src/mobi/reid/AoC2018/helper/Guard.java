@@ -7,7 +7,7 @@ public class Guard {
     public String name;
     public ArrayList<String> log;
     public int asleepDuration;
-    private int[] sleepTracker;
+    public int[] sleepTracker;
 
     public Guard(String name){
         this.name = name;
