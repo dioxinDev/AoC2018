@@ -46,7 +46,7 @@ public class InitDay4a {
             }
             if(guard.sleepTracker[guard.freqMinute()]>freqMinuteCount){
                 freqMinuteSleeper = guard;
-                freqMinuteCount = guard.sleepTracker[guard.freqMinute()];
+                freqMinuteCount = guard.timesMostFrequent();
             }
 
         }
