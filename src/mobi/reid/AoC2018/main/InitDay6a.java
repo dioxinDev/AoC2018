@@ -1,5 +1,10 @@
 package mobi.reid.AoC2018.main;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import mobi.reid.AoC2018.helper.ChronalNode;
 import mobi.reid.AoC2018.helper.Helper;
 
 //              --- Day 6: Chronal Coordinates ---
@@ -51,11 +56,27 @@ import mobi.reid.AoC2018.helper.Helper;
 //
 //        What is the size of the largest area that isn't infinite?
 public class InitDay6a {
+    static int xOffset = Integer.MAX_VALUE;
+    static int yOffset = Integer.MAX_VALUE;
+    static int xMax = Integer.MIN_VALUE;
+    static int yMax = Integer.MIN_VALUE;
 
     public static void main(String[] args) {
-        String input = Helper.getStringfromFile("./resources/day5ainput.txt");
+        String input = Helper.getStringfromFile("./resources/day6ainput.txt");
+        StringTokenizer tokens = new StringTokenizer(input, "\n");
+        List<ChronalNode> nodes = new ArrayList<>();
+        ChronalNode currNode;
+        int x;
+        int y;
+        for (String token = tokens.nextToken(); tokens.hasMoreTokens();token = tokens.nextToken() ) {
+            x = Integer.parseInt((token.substring(0,token.indexOf(","))));
+            System.out.println(token);
+            System.out.println(":"+(token.substring(token.indexOf(",")))+":");
+            y = Integer.parseInt((token.substring(token.indexOf(",")+1)));
 
-        System.out.println(input);
+        }
+
+        //System.out.println(input);
 
     }
 
