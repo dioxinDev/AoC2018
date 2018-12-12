@@ -1,61 +1,76 @@
 package mobi.reid.AoC2018.helper;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.text.Collator;
+import java.util.*;
 
 public class Step implements Comparable {
 
     public Character name;
+    int startTime;
     ArrayList<Step> dependencyList = new ArrayList<>();
 
-    public Step(Character name){
+    public Step(Character name) {
         this.name = name;
     }
 
-    public void addDependency(Step dependency){
+    public void addDependency(Step dependency) {
         this.dependencyList.add(dependency);
     }
 
-    @Override
-    public String toString() {
-        String string = "["+name+"]";
-        Collections.sort(dependencyList);
-        for(Step step: dependencyList){
 
-            string += ":" +step.name ;
+    public String toDependencyString(){
+        ArrayList<String> tempArray =  new ArrayList();
+        String returnValue = "";
+        for (Step step : dependencyList) {
+            returnValue +=step.toDependencyString();
+        }
+        returnValue +=""+this.name;
+        Set<Character> dependencies = new HashSet();
+        for (char letter : returnValue.toCharArray())
+              { dependencies.add(letter);
+
+        }
+        returnValue = "";
+        Character[] charArray = dependencies.toArray(new Character[0]);
+        Arrays.sort(charArray);
+        for (int i = charArray.length-1; i > -1 ; i--) {
+
+
+            returnValue += charArray[i];
+
         }
 
-        return string;
+
+        return returnValue;
     }
 
     @Override
     public int compareTo(Object o) {
-        Step compare = (Step) o;
-        return (  this.getPriority() - compare.getPriority());
+        Collator collator = Collator.getInstance();
+        return collator.compare(this.toDependencyString(),((Step) o).toDependencyString());
     }
 
-    public int getPriority(){
-        int prio = 0;
-    return (getHighestDependencyOrder()*100)+(this.name-64);
-    }
 
-public ArrayList<Step> getDependencyList(){
+    public ArrayList<Step> getDependencyList() {
         return dependencyList;
-}
-
-public int getHighestDependencyOrder(){
-        int order = this.name-64;
-        int dependencyOrder = 0;
-    for(Step step: dependencyList){
-        dependencyOrder = step.getHighestDependencyOrder();
-        if(step.name-64>dependencyOrder){order=step.name;}
-        if(dependencyOrder>order){order=dependencyOrder;}
     }
 
-        return order; }
+    @Override
+    public String toString() {
+        return ""+this.name;
+    }
 
 
-public int getPosition(){
-        return this.name+getHighestDependencyOrder();
+    public int getProcessingTime(){
+        return name-4;
+    }
+
+    public int getStartTime() {
+        return startTime;
+    }
+    public void setStartTime(int startTime){
+        this.startTime = startTime;
     }
 }
+
+
