@@ -60,24 +60,107 @@ public class InitDay6a {
     static int yOffset = Integer.MAX_VALUE;
     static int xMax = Integer.MIN_VALUE;
     static int yMax = Integer.MIN_VALUE;
+    static int xSpan;
+    static int ySpan;
 
     public static void main(String[] args) {
         String input = Helper.getStringfromFile("./resources/day6ainput.txt");
         StringTokenizer tokens = new StringTokenizer(input, "\n");
         List<ChronalNode> nodes = new ArrayList<>();
         ChronalNode currNode;
+        ArrayList<ChronalNode> contention = new ArrayList<>();
+        int part2Area = 0;
         int x;
         int y;
-        for (String token = tokens.nextToken(); tokens.hasMoreTokens();token = tokens.nextToken() ) {
-            x = Integer.parseInt((token.substring(0,token.indexOf(","))));
-            System.out.println(token);
-            System.out.println(":"+(token.substring(token.indexOf(",")))+":");
-            y = Integer.parseInt((token.substring(token.indexOf(",")+1)));
+        String token = null;
+        while (tokens.hasMoreTokens()){
+            token = tokens.nextToken();
+            x = Integer.parseInt((token.substring(0, token.indexOf(","))).trim());
+            y = Integer.parseInt((token.substring(token.indexOf(",") + 1)).trim());
+            currNode = new ChronalNode((x + "," + y), x, y);
+            nodes.add(currNode);
+            contention.add(currNode);
+            System.out.println(currNode.name);
+            if (xOffset > x) xOffset = x;
+            if (yOffset > y) yOffset = y;
+            if (xMax < x) xMax = x;
+            if (yMax < y) yMax = y;
+
+        }
+        System.out.println("Contention"+contention.size());
+        System.out.println("nodes"+nodes.size());
+        System.out.println(xOffset + "->" + xMax + " ,  " + yOffset + "->" + yMax);
+        xSpan = xMax - xOffset+1;
+        ySpan = yMax - yOffset+1;
+        //xOffset -=1;
+        //yOffset -=1;
+        int minimumDistance = 0;
+        int nodeDistance = 0;
+        ChronalNode nearestNode = null;
+        String[][] grid = new String[xSpan][ySpan];
+        int cumulativeDistance = 0;
+        for (x = 0; x < xSpan; x++) {
+            for (y = 0; y < ySpan; y++) {
+                cumulativeDistance = 0;
+                minimumDistance = Integer.MAX_VALUE;
+                for (ChronalNode node : nodes) {
+                    nodeDistance = node.getDistance(x + xOffset, y + yOffset);
+                    cumulativeDistance+=nodeDistance;
+                    if (minimumDistance >= nodeDistance) {
+                        if (minimumDistance == nodeDistance) {
+                            nearestNode = null;
+
+                        } else {
+                            nearestNode = node;
+                            minimumDistance = nodeDistance;
+
+                        }
+                    }
+                }
+                    if (nearestNode != null) {
+                        nearestNode.incrementArea();
+                        grid[x][y] = nearestNode.name;
+                    }
+                    if(x==0 || y == 0 || x == (xSpan-1) || y == (ySpan-1)){
+                        contention.remove(nearestNode);
+                    }
+                    if((cumulativeDistance<10000)){
+                        if(cumulativeDistance<0) System.out.println("SHIT");
+                        part2Area++;
+                        grid[x][y] = ".";
+                    } else {
+                        grid[x][y] = "0";
+                    }
+                    if(minimumDistance==0){
+                        //part2Area++;
+                    }
+
+            }
 
         }
 
-        //System.out.println(input);
+int maxArea = Integer.MIN_VALUE;
+        String nearest = "";
+        for (ChronalNode node : contention) {
+            if(node.areaCovered>maxArea){
+                maxArea = node.areaCovered;
+                nearest = node.name + " :";
+            }
+        }
+
+        for (x = 0; x < xSpan; x++) {
+            for (y = 0; y < ySpan; y++) {
+                //System.out.print(grid[x][y]);
+            }
+            //System.out.println();
+        }
+        System.out.println(nearest + maxArea);
+        System.out.println("Part2 Area:"+part2Area);
+        System.out.println(nodes.size());
+
+
+
+
 
     }
-
 }
